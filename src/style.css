@@ -17,9 +17,19 @@ body {
 .footer {
     width:100%;
     height:100px;
+
+    background-color: lightgray;
 }
 .sidebar img {
     width: 50px;
+}
+.project-tab {
+    display:flex;
+    align-items: center;
+    width: 100%;
+    height:50px;
+
+    padding:10px;
 }
 
 .content {
@@ -30,6 +40,18 @@ body {
 }
 .todo-list {
     flex:1;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+
+    overflow-y: auto;
+}
+.todo-item {
+    justify-self: center;
+    align-items: center;
+}
+.topbar {
+    grid-column: 1/3;
+    background-color: yellow;
 }
 .content img {
     width: 50px;
