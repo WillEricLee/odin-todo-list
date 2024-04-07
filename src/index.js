@@ -1,10 +1,7 @@
 import './style.css';
 import {Todo, Project, createProjectEntry, createTodoEntry} from './todoProjectHandler';
-import parse from 'date-fns/parse'
 
 function displayProject(project) {
-
-    const contentSection = document.querySelector('.todo-list');
     contentSection.innerHTML = "";
 
     const topbar = document.createElement('div');
@@ -25,38 +22,77 @@ function displayProject(project) {
     }
 }
 
+function createExampleProject(number) {
+    let title = 'Example Project ' + number;
+    const exampleProject1 = new Project(title);
+
+    const exampleDateTime = '2024-04-05T14:30:00';
+    const example1 = new Todo('Example1', 'This is a description', exampleDateTime, 'priority wawa');
+    const example2 = new Todo('Example2', 'This is a description', exampleDateTime, 'priority wawa');
+    const example3 = new Todo('Example3', 'This is a description', exampleDateTime, 'priority wawa');
+    const example4 = new Todo('Example4', 'This is a description', exampleDateTime, 'priority wawa');
+    const example5 = new Todo('Example5', 'This is a description', exampleDateTime, 'priority wawa');
+    const example6 = new Todo('Example6', 'This is a description', exampleDateTime, 'priority wawa');
+    const example7 = new Todo('Example7', 'This is a description', exampleDateTime, 'priority wawa');
+    const example8 = new Todo('Example8', 'This is a description', exampleDateTime, 'priority wawa');
+    const example9 = new Todo('Example9', 'This is a description', exampleDateTime, 'priority wawa');
+
+    exampleProject1.todos.push(example1);
+    exampleProject1.todos.push(example2);
+    exampleProject1.todos.push(example3);
+    exampleProject1.todos.push(example4);
+    exampleProject1.todos.push(example5);
+    exampleProject1.todos.push(example6);
+    exampleProject1.todos.push(example7);
+    exampleProject1.todos.push(example8);
+    exampleProject1.todos.push(example9);
+
+    return exampleProject1;
+}
+
+function makeInputLabel(labelText) {
+    const container = document.createElement('div');
+    container.setAttribute('class', 'todo-input');
+
+    const label = document.createElement('h3');
+    label.innerHTML = labelText + ": ";
+    const input = document.createElement('input');
+    input.setAttribute('placeholder', labelText);
+
+    container.appendChild(label);
+    container.appendChild(input);
+
+    return container;
+    
+}
+
+function newTodoInput() { 
+    const todo = document.createElement('div');
+    
+    todo.appendChild(makeInputLabel("Title"));
+    todo.appendChild(makeInputLabel("Description"));
+    todo.appendChild(makeInputLabel("Date"));
+    todo.appendChild(makeInputLabel("Priority"));
+
+    todo.setAttribute('class', 'todo-item');
+
+    return todo;
+}
+
+
 let projects = [];
 const sidebarContent = document.querySelector('.project-list');
+const contentSection = document.querySelector('.todo-list');
+const newTodoClickable = document.querySelector('.new-todo');
+newTodoClickable.onclick = () => {
+    contentSection.appendChild(newTodoInput());
+};
 
 
 //------------------EXAMPLE TESTING-----------------------------------
 
-const exampleProject1 = new Project('Example Project 1');
-const exampleProject2 = new Project('Example Project 2');
-projects.push(exampleProject1)
-projects.push(exampleProject2)
-
-const exampleDateTime = '2024-04-05T14:30:00';
-const example1 = new Todo('Example1', 'This is a description', exampleDateTime, 'priority wawa');
-const example2 = new Todo('Example2', 'This is a description', exampleDateTime, 'priority wawa');
-const example3 = new Todo('Example3', 'This is a description', exampleDateTime, 'priority wawa');
-const example4 = new Todo('Example4', 'This is a description', exampleDateTime, 'priority wawa');
-const example5 = new Todo('Example5', 'This is a description', exampleDateTime, 'priority wawa');
-const example6 = new Todo('Example6', 'This is a description', exampleDateTime, 'priority wawa');
-const example7 = new Todo('Example7', 'This is a description', exampleDateTime, 'priority wawa');
-const example8 = new Todo('Example8', 'This is a description', exampleDateTime, 'priority wawa');
-const example9 = new Todo('Example9', 'This is a description', exampleDateTime, 'priority wawa');
-
-
-exampleProject1.todos.push(example1);
-exampleProject1.todos.push(example2);
-exampleProject1.todos.push(example3);
-exampleProject1.todos.push(example4);
-exampleProject1.todos.push(example5);
-exampleProject1.todos.push(example6);
-exampleProject1.todos.push(example7);
-exampleProject1.todos.push(example8);
-exampleProject1.todos.push(example9);
+projects.push(createExampleProject(1));
+projects.push(createExampleProject(2));
 
 for (const project of projects) {
     sidebarContent.appendChild(createProjectEntry(project));

@@ -18,6 +18,7 @@ export class Project {
 
     constructor (title) {
         this.title = title;
+        this.description = "Create a description";
     }
 };
 export function createProjectEntry(project) {
@@ -38,7 +39,7 @@ export function createTodoEntry(todo) {
     const title = document.createElement('h2');
     const description = document.createElement('p');
     const date = document.createElement('p');
-    const priority = document.createElement('img');
+    const priority = document.createElement('p');
 
     title.innerHTML = todo.title;
     description.innerHTML = todo.description;

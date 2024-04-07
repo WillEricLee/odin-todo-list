@@ -48,6 +48,8 @@ body {
 .todo-item {
     justify-self: center;
     align-items: center;
+    
+    border:2px solid red;
 }
 .topbar {
     grid-column: 1/3;
