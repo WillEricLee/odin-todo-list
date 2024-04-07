@@ -1,5 +1,4 @@
-import displayProject from './index.js';
-import { format } from 'date-fns';
+import {displayProject, currentProject} from './index.js';
 
 export class Todo {
     constructor (title, description, date, priority) {
@@ -28,7 +27,9 @@ export function createProjectEntry(project) {
     const text = document.createElement('h2');
     text.innerHTML = project.title;
     text.setAttribute('class', 'project-text');
-    text.addEventListener('click', () => {displayProject(project)});
+    text.addEventListener('click', () => {
+        displayProject(project);
+    });
 
     projectDiv.appendChild(text);
 

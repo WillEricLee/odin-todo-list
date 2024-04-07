@@ -20,6 +20,8 @@ function displayProject(project) {
     for (const todo of project.todos) {
         contentSection.appendChild(createTodoEntry(todo));
     }
+
+    currentProject = project;
 }
 
 function createExampleProject(number) {
@@ -68,24 +70,43 @@ function makeInputLabel(labelText) {
 
 function newTodoInput() { 
     const todo = document.createElement('div');
-    
-    todo.appendChild(makeInputLabel("Title"));
-    todo.appendChild(makeInputLabel("Description"));
-    todo.appendChild(makeInputLabel("Date"));
-    todo.appendChild(makeInputLabel("Priority"));
-
     todo.setAttribute('class', 'todo-item');
+
+    const confirmButton = document.createElement('button');
+    confirmButton.innerHTML = "Confirm";
+    confirmButton.onclick = () => {
+        const newTodo = new Todo(title.children[1].value, description.children[1].value, date.children[1].value, priority.children[1].value);
+
+        currentProject.todos.push(newTodo);
+        displayProject(currentProject);
+    };
+
+    const title = makeInputLabel("Title");
+    const description = makeInputLabel("Description");
+    const date = makeInputLabel("Date")
+    const priority = makeInputLabel("Priority");
+    
+    todo.appendChild(title);
+    todo.appendChild(description);
+    todo.appendChild(date);
+    todo.appendChild(priority);
+    todo.appendChild(confirmButton);
 
     return todo;
 }
 
 
-let projects = [];
+var projects = [];
+var makingNewTodo = false;
+var currentProject = null;
 const sidebarContent = document.querySelector('.project-list');
 const contentSection = document.querySelector('.todo-list');
 const newTodoClickable = document.querySelector('.new-todo');
 newTodoClickable.onclick = () => {
-    contentSection.appendChild(newTodoInput());
+    if (!makingNewTodo) {
+        makingNewTodo = true;
+        contentSection.appendChild(newTodoInput());
+    }
 };
 
 
@@ -98,4 +119,4 @@ for (const project of projects) {
     sidebarContent.appendChild(createProjectEntry(project));
 }
 
-export default displayProject;
+export {displayProject, currentProject};
