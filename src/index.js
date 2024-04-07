@@ -24,6 +24,13 @@ function displayProject(project) {
     currentProject = project;
 }
 
+function displayProjectList() {
+    sidebarContent.innerHTML = "";
+    for (const project of projects) {
+        sidebarContent.appendChild(createProjectEntry(project));
+    }    
+}
+
 function createExampleProject(number) {
     let title = 'Example Project ' + number;
     const exampleProject1 = new Project(title);
@@ -95,17 +102,38 @@ function newTodoInput() {
     return todo;
 }
 
+function newProjectInput() {
+    const input = document.createElement('input');
+    input.setAttribute('class', 'project-input');
+    input.addEventListener("keydown", (e) => {
+        if (e.key === 'Enter') {
+            console.log('wawa');
+            projects.push(new Project(input.value));
+            displayProjectList();
+        }
+    });
+
+    return input;
+}
+
 
 var projects = [];
-var makingNewTodo = false;
+var makingNewTodo = false, makingNewProject = false;
 var currentProject = null;
 const sidebarContent = document.querySelector('.project-list');
 const contentSection = document.querySelector('.todo-list');
 const newTodoClickable = document.querySelector('.new-todo');
+const newProjectClickable = document.querySelector('.new-project');
 newTodoClickable.onclick = () => {
     if (!makingNewTodo) {
         makingNewTodo = true;
         contentSection.appendChild(newTodoInput());
+    }
+};
+newProjectClickable.onclick = () => {
+    if (!makingNewProject) {
+        makingNewProject = true;
+        sidebarContent.appendChild(newProjectInput());
     }
 };
 
@@ -115,8 +143,6 @@ newTodoClickable.onclick = () => {
 projects.push(createExampleProject(1));
 projects.push(createExampleProject(2));
 
-for (const project of projects) {
-    sidebarContent.appendChild(createProjectEntry(project));
-}
+displayProjectList();
 
 export {displayProject, currentProject};
