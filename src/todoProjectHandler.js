@@ -1,15 +1,16 @@
-import {displayProject, currentProject} from './index.js';
+import {displayProject} from './index.js';
 
 export class Todo {
-    constructor (title, description, date, priority) {
+    constructor (title, description, date, time, priority) {
         this.title = title;
         this.description = description;
         this.date = date;
+        this.time = time;
         this.priority = priority;
     }
 
     logItems() {
-        console.log(this.title, this.description, this.dueDate, this.priority);
+        console.log(this.title, this.description, this.date, this.time, this.priority);
     }
 };
 export class Project {
@@ -38,21 +39,44 @@ export function createProjectEntry(project) {
 export function createTodoEntry(todo) {
     const container = document.createElement('div');
     const title = document.createElement('h2');
-    const description = document.createElement('p');
-    const date = document.createElement('p');
     const priority = document.createElement('p');
 
     title.innerHTML = todo.title;
-    description.innerHTML = todo.description;
-    date.innerHTML = todo.date;
     priority.innerHTML = todo.priority;
 
-    container.appendChild(title);
-    container.appendChild(description);
-    container.appendChild(date);
-    container.appendChild(priority);
+    const expandButton = document.createElement("button");
+    expandButton.innerHTML = "Expand";
+    expandButton.onclick = () => {
+        const description = document.createElement('p');
+        const date = document.createElement('p');
+        const time = document.createElement('p');
 
-    container.setAttribute('class', 'todo-item')
+        description.innerHTML = todo.description;
+        date.innerHTML = todo.date;
+        time.innerHTML = todo.time;
+
+        container.removeChild(expandButton);
+        container.appendChild(description);
+        container.appendChild(date);
+        container.appendChild(time);
+    };
+
+    container.appendChild(title);
+    container.appendChild(priority);
+    container.appendChild(expandButton);
+
+    container.setAttribute('class', 'todo-item');
 
     return container;
 };
+
+export function createDefaultProject() {
+    let title = 'Default Project';
+    const defaultProject = new Project(title);
+
+    const example1 = new Todo('Todo 1', 'Default Description', '01-01-1970', '12:00 AM', '!!!');
+
+    defaultProject.todos.push(example1);
+
+    return defaultProject;
+}
